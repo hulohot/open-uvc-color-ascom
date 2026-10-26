@@ -30,6 +30,10 @@ Set-ExecutionPolicy -Scope Process Bypass
 .\install.ps1
 ```
 
+The release ZIP is prebuilt, so it does not need the .NET SDK; the same command
+registers its included DLL. A source checkout first builds the driver, then
+registers it.
+
 In the ASCOM camera chooser select **Open UVC Color Camera**, use **Setup**, and
 choose the UVC camera index. Then select that camera in SharpCap's ASCOM camera
 source. To remove the registration, run:

@@ -14,8 +14,12 @@ if ($Uninstall) {
     exit 0
 }
 
-dotnet build $project -c $Configuration -p:PlatformTarget=x64
-if ($LASTEXITCODE) { throw 'Build failed.' }
+if (Test-Path $project) {
+    dotnet build $project -c $Configuration -p:PlatformTarget=x64
+    if ($LASTEXITCODE) { throw 'Build failed.' }
+} elseif (-not (Test-Path $dll)) {
+    throw "Neither source project nor prebuilt driver DLL was found."
+}
 & $regasm $dll /codebase
 if ($LASTEXITCODE) { throw 'COM registration failed.' }
 Write-Host 'Installed ASCOM.OpenUvcColor.Camera. Configure its UVC camera index through the ASCOM chooser Setup button.'
